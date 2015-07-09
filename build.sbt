@@ -1,3 +1,12 @@
+import AssemblyKeys._
+
+assemblySettings
+
+mainClass in assembly := Some("play.core.server.NettyServer")
+
+fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value)
+
+
 name := """finagle-elasticsearch-microservice"""
 
 version := "1.0-SNAPSHOT"
@@ -9,7 +18,7 @@ scalaVersion := "2.11.6"
 libraryDependencies ++= Seq(
   jdbc,
   cache,
-  ws,
+  ws exclude ("org.apache.httpcomponents" , "httpclient"),
   specs2 % Test,
   "com.twitter"                 % "finagle-http_2.11"       % "6.25.0",
   "com.twitter"                 % "bijection-util_2.11"     % "0.7.2"
@@ -25,3 +34,4 @@ routesGenerator := InjectedRoutesGenerator
 libraryDependencies += filters
 
 play.PlayImport.PlayKeys.playDefaultPort := 9001
+
