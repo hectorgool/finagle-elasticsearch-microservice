@@ -75,3 +75,8 @@ libraryDependencies ++= Seq(
   "com.twitter"                 % "bijection-util_2.11"     % "0.7.2"
 )
 
+
+API Test
+
+http://localhost:9000/save
+curl -H "Content-Type: application/json" -X POST -d '{"username":"xyz","password":"xyz"}' http://localhost:9000/save

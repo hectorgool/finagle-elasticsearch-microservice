@@ -1,4 +1,6 @@
 import AssemblyKeys._
+//import NativePackagerKeys._
+//import com.typesafe.sbt.SbtNativePackager._
 
 assemblySettings
 
@@ -14,6 +16,9 @@ version := "1.0-SNAPSHOT"
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
 scalaVersion := "2.11.6"
+
+maintainer := "ginduc"
+dockerExposedPorts in Docker := Seq(9002)
 
 libraryDependencies ++= Seq(
   jdbc,
