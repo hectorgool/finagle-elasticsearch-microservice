@@ -38,5 +38,5 @@ routesGenerator := InjectedRoutesGenerator
 //https://www.playframework.com/documentation/2.4.x/CorsFilter
 libraryDependencies += filters
 
-play.PlayImport.PlayKeys.playDefaultPort := 9001
+play.PlayImport.PlayKeys.playDefaultPort := 9000
 

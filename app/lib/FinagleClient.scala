@@ -17,7 +17,7 @@ import play.api.Play.current
 object FinagleClient{
 
 
-  val hosts = current.configuration.getString("elasticsearch.hosts").get
+  val hosts = current.configuration.getString("elasticsearch.hosts").get//conf/application.conf:elasticsearch.hosts="localhost:9200"
   val client: Service[HttpRequest, HttpResponse] = Http.newService(hosts)
 
   def requestBuilderGet(path: List[String], json: JsValue): DefaultHttpRequest = {
@@ -38,6 +38,28 @@ object FinagleClient{
     
     request
 
+  }
+
+  //beta
+  def requestBuilderPost(path: List[String], json: JsValue): DefaultHttpRequest = {
+
+    val payload = ChannelBuffers.copiedBuffer( Json.stringify(json) , UTF_8)
+    val _path = path.mkString("/","/","")
+    val request = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.POST, _path)
+
+    request.headers().add(USER_AGENT, "Finagle - Play")
+    request.headers().add(HOST, hosts) // the host.openOr("localhost") can be replace for host.openOr("default value here")
+    request.headers().add(CONTENT_TYPE, "application/json")
+    request.headers().add(CONNECTION, "keep-alive")
+    request.headers().add(CONTENT_LENGTH, String.valueOf(payload.readableBytes()));
+    request.headers().add(ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost")//santo
+    request.setContent(payload)
+  
+    Logger.debug("Sending request:\n%s".format(request))
+    Logger.debug("Sending body:\n%s".format(request.getContent.toString(CharsetUtil.UTF_8)))
+    
+    request
+  
   }
 
   def requestBuilderPut(path: List[String], json: JsValue): DefaultHttpRequest = {
@@ -101,7 +123,8 @@ object FinagleClient{
   def documentSave(path: List[String], json: JsValue) ={
 
     Logger.debug("json is %s" format json)
-    val req = requestBuilderPut(path, json)
+    //val req = requestBuilderPut(path, json)
+    val req = requestBuilderPost(path, json)
     sendToElastic(req)
 
   }
