@@ -49,7 +49,6 @@ class Application extends Controller with UtilBijections {
 		val lon = (reqData \ "location" \ "lon").as[Double]
 
 		val json: JsValue = Json.obj(
-			"id" -> id,
       		"cp" -> cp,
       		"colonia" -> colonia,
       		"ciudad" -> ciudad,
@@ -60,7 +59,7 @@ class Application extends Controller with UtilBijections {
   			)
 		)
 
-		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentSave( List( elasticsearchIndex, indexType ), json ) )
+		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentSave( List( elasticsearchIndex, indexType, id.toString  ), json ) )
         
 		futureScala.map( f => 
 			Ok( Json.parse( f.getContent.toString( CharsetUtil.UTF_8 ) ) )
@@ -77,6 +76,39 @@ class Application extends Controller with UtilBijections {
 		)
 
 	}
+	//beta
+	def updateDoc = Action.async(parse.json) { request =>
+ 		
+		val reqData: JsValue = request.body
 
+		val id = (reqData \ "id").as[Double]
+		val cp = (reqData \ "cp").as[Double]
+		val colonia = (reqData \ "colonia").as[String]
+		val ciudad = (reqData \ "ciudad").as[String]
+		val delegacion = (reqData \ "delegacion").as[String]
+		val lat = (reqData \ "location" \ "lat").as[Double]
+		val lon = (reqData \ "location" \ "lon").as[Double]
+
+		val json: JsValue = Json.obj(
+			"doc" -> Json.obj(
+	      		"cp" -> cp,
+	      		"colonia" -> colonia,
+	      		"ciudad" -> ciudad,
+	      		"delegacion" -> delegacion,
+	      		"location" -> Json.obj(
+	  				"lat" -> lat,
+	  				"lon" -> lon
+	  			)
+  			),
+  			"doc_as_upsert"-> "true"
+		)
+
+		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentSave( List( elasticsearchIndex, indexType, id.toString, "_update" ), json ) )
+        
+		futureScala.map( f => 
+			Ok( Json.parse( f.getContent.toString( CharsetUtil.UTF_8 ) ) )
+		)
+
+	}
 
 }

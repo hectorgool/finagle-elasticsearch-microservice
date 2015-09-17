@@ -2,7 +2,6 @@
 curl -X DELETE localhost:9200/mx
 
 
-
 curl -X PUT "http://localhost:9200/mx" -d '
 {
     "settings": {
@@ -28,15 +27,8 @@ curl -X PUT "http://localhost:9200/mx" -d '
         }
     },
     "mappings": {
-        "postal_code": {
-            "_id" : {
-                "path" : "id"
-            },
-            
+        "codigo_postal": {
             "properties": {
-                "id": {
-                    "type": "string"
-                },
                 "cp": {
                     "type": "multi_field",
                     "fields": {
@@ -92,10 +84,8 @@ curl -X PUT "http://localhost:9200/mx" -d '
 }
 '
 
-
-curl -XPOST "http://localhost:9200/mx/postal_code" -d "
+curl -XPOST "http://localhost:9200/mx/postal_code/1" -d "
 {
-    \"id\"    : \"1\",
     \"cp\"         : \"20008\",
     \"colonia\"    : \"Delegación de La Secretaría de Comercio y Fomento Industrial\",
     \"ciudad\"     : \"Aguascalientes\",
@@ -103,5 +93,18 @@ curl -XPOST "http://localhost:9200/mx/postal_code" -d "
     \"location\": {
         \"lat\": \"22.0074\",
         \"lon\": \"-102.2837\"
+    }
+}"
+
+
+curl -XPOST "http://localhost:9200/mx/postal_code/2" -d "
+{
+    \"cp\"         : \"20009\",
+    \"colonia\"    : \"xxx\",
+    \"ciudad\"     : \"yyy\",
+    \"delegacion\" : \"zzz\",
+    \"location\": {
+        \"lat\": \"21.0074\",
+        \"lon\": \"-100.2837\"
     }
 }"

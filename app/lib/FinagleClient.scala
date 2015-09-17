@@ -40,7 +40,6 @@ object FinagleClient{
 
   }
 
-  //beta
   def requestBuilderPost( path: List[String], json: JsValue ): DefaultHttpRequest = {
 
     val payload = ChannelBuffers.copiedBuffer( Json.stringify(json) , UTF_8)
@@ -130,8 +129,16 @@ object FinagleClient{
 
   def documentDelete( path: List[String] ) ={
 
-    //Logger.debug("json is %s" format json)
+    //Logger.debug("path is %s" format path)
     val req = requestBuilderDelete(path)
+    sendToElastic(req)
+
+  }
+
+  def documentUpdate( path: List[String], json: JsValue ) ={
+
+    Logger.debug("json is %s" format json)
+    val req = requestBuilderPost(path, json)
     sendToElastic(req)
 
   }

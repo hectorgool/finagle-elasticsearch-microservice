@@ -56,8 +56,4 @@ curl -H "Content-Type: application/json" -X POST -d '
 
 curl -XDELETE http://localhost:9200/mx/postal_code/3
 
-
-curl -H "Content-Type: application/json" -X POST -d '
-{
-    "id"         : 3
-}' http://localhost:9000/api/delete
+curl -XDELETE http://localhost:9000/api/delete/3
