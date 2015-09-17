@@ -20,7 +20,7 @@ object FinagleClient{
   val hosts = current.configuration.getString("elasticsearch.hosts").get//conf/application.conf:elasticsearch.hosts="localhost:9200"
   val client: Service[HttpRequest, HttpResponse] = Http.newService(hosts)
 
-  def requestBuilderGet(path: List[String], json: JsValue): DefaultHttpRequest = {
+  def requestBuilderGet( path: List[String], json: JsValue ): DefaultHttpRequest = {
 
     val payload = ChannelBuffers.copiedBuffer( Json.stringify(json) , UTF_8)    
     val _path = path.mkString("/","/","")
@@ -41,7 +41,7 @@ object FinagleClient{
   }
 
   //beta
-  def requestBuilderPost(path: List[String], json: JsValue): DefaultHttpRequest = {
+  def requestBuilderPost( path: List[String], json: JsValue ): DefaultHttpRequest = {
 
     val payload = ChannelBuffers.copiedBuffer( Json.stringify(json) , UTF_8)
     val _path = path.mkString("/","/","")
@@ -62,7 +62,7 @@ object FinagleClient{
   
   }
 
-  def requestBuilderPut(path: List[String], json: JsValue): DefaultHttpRequest = {
+  def requestBuilderPut( path: List[String], json: JsValue ): DefaultHttpRequest = {
 
     val payload = ChannelBuffers.copiedBuffer( Json.stringify(json) , UTF_8)
     val _path = path.mkString("/","/","")
@@ -83,7 +83,7 @@ object FinagleClient{
   
   }
 
-  def requestBuilderDelete(path: List[String]): DefaultHttpRequest = {
+  def requestBuilderDelete( path: List[String] ): DefaultHttpRequest = {
 
     val _path = path.mkString("/","/","")
     val request = new DefaultHttpRequest(HttpVersion.HTTP_1_1, HttpMethod.DELETE, _path)
@@ -99,7 +99,7 @@ object FinagleClient{
 
   }
 
-  def sendToElastic(request: DefaultHttpRequest): Future[HttpResponse] = {
+  def sendToElastic( request: DefaultHttpRequest ): Future[HttpResponse] = {
 
     Logger.debug("Request to send is %s" format request)
     val httpResponse = client(request)
@@ -113,18 +113,25 @@ object FinagleClient{
 
   }
 
-  def documentSearch(index: String, indexType: String, json: JsValue): Future[HttpResponse] ={
+  def documentSearch( index: String, indexType: String, json: JsValue ): Future[HttpResponse] ={
 
     val req = requestBuilderGet(List( index, indexType, "_search"), json)
     sendToElastic(req)
 
   }
 
-  def documentSave(path: List[String], json: JsValue) ={
+  def documentSave( path: List[String], json: JsValue ) ={
 
     Logger.debug("json is %s" format json)
-    //val req = requestBuilderPut(path, json)
     val req = requestBuilderPost(path, json)
+    sendToElastic(req)
+
+  }
+
+  def documentDelete( path: List[String] ) ={
+
+    //Logger.debug("json is %s" format json)
+    val req = requestBuilderDelete(path)
     sendToElastic(req)
 
   }

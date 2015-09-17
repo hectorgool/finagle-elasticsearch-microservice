@@ -39,4 +39,3 @@ routesGenerator := InjectedRoutesGenerator
 libraryDependencies += filters
 
 play.PlayImport.PlayKeys.playDefaultPort := 9000
-

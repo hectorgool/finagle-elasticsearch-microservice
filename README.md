@@ -42,13 +42,22 @@ http://localhost:9200/mx/postal_code/_search?pretty
 
 curl -H "Content-Type: application/json" -X POST -d '
 {
-    "id"         : "2",
-    "cp"         : "208",
+    "id"         : 3,
+    "cp"         : 208,
     "colonia"    : "xxx",
     "ciudad"     : "yyy",
     "delegacion" : "zzz",
     "location": {
-        "lat": "22.0074",
-        "lon": "-102.2837"
+        "lat": 22.0074,
+        "lon": -102.2837
     }
-}' http://localhost:9001/api/save
+}' http://localhost:9000/api/save
+
+
+curl -XDELETE http://localhost:9200/mx/postal_code/3
+
+
+curl -H "Content-Type: application/json" -X POST -d '
+{
+    "id"         : 3
+}' http://localhost:9000/api/delete

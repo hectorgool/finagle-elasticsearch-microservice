@@ -35,8 +35,8 @@ class Application extends Controller with UtilBijections {
 		)
 
 	}
-	//beta
-	def docSave = Action.async(parse.json) { request =>
+	
+	def saveDoc = Action.async(parse.json) { request =>
  		
 		val reqData: JsValue = request.body
 
@@ -48,25 +48,29 @@ class Application extends Controller with UtilBijections {
 		val lat = (reqData \ "location" \ "lat").as[Double]
 		val lon = (reqData \ "location" \ "lon").as[Double]
 
+		val json: JsValue = Json.obj(
+			"id" -> id,
+      		"cp" -> cp,
+      		"colonia" -> colonia,
+      		"ciudad" -> ciudad,
+      		"delegacion" -> delegacion,
+      		"location" -> Json.obj(
+  				"lat" -> lat,
+  				"lon" -> lon
+  			)
+		)
 
-		val jsonDoc: JsValue = Json.toJson(
-  			Map(
-  				"id" -> toJson(id),
-          		"cp" -> toJson(cp),
-          		"colonia" -> toJson(colonia),
-          		"ciudad" -> toJson(ciudad),
-          		"delegacion" -> toJson(delegacion),
-          		"location" -> toJson(
-        			Map(
-          				"lat" -> toJson(lat),
-          				"lon" -> toJson(lon)
-        			)
-      			)
-			)
-  		)
+		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentSave( List( elasticsearchIndex, indexType ), json ) )
+        
+		futureScala.map( f => 
+			Ok( Json.parse( f.getContent.toString( CharsetUtil.UTF_8 ) ) )
+		)
 
-  		//println("*********************** jsonDoc: " + jsonDoc)
-		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentSave( List( elasticsearchIndex, indexType ), jsonDoc ) )
+	}
+
+	def deleteDoc( id: Long ) = Action.async {
+
+		val futureScala = twitter2ScalaFuture.apply( FinagleClient.documentDelete( List( elasticsearchIndex, indexType, id.toString ) ) )
         
 		futureScala.map( f => 
 			Ok( Json.parse( f.getContent.toString( CharsetUtil.UTF_8 ) ) )

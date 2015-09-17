@@ -12,4 +12,6 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST        /api/search              controllers.Application.searchDoc
 
 #beta
-POST        /api/save                controllers.Application.docSave
+POST        /api/save                controllers.Application.saveDoc
+
+DELETE      /api/delete/:id          controllers.Application.deleteDoc(id: Long)
