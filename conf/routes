@@ -9,10 +9,10 @@ GET     /                           controllers.Application.index
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 
-POST        /api/search              controllers.Application.searchDoc
+POST        /api/create             controllers.Application.createDocument
 
-POST        /api/save                controllers.Application.saveDoc
+POST        /api/read               controllers.Application.readDocument
 
-DELETE      /api/delete/:id          controllers.Application.deleteDoc(id: Long)
+POST        /api/update             controllers.Application.updateDocument
 
-POST        /api/update              controllers.Application.updateDoc
+DELETE      /api/delete/:id         controllers.Application.deleteDocument(id: Long)
