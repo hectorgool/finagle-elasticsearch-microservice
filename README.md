@@ -9,6 +9,8 @@ Scala Play 2.4.2 + Finagle +  Elasticsearch
 
 2) startserver.sh
 
+save document 1 in elasticsearch:
+
 ```
 curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
 {
@@ -22,6 +24,8 @@ curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
     }
 }"
 ```
+
+save document 2 in elasticsearch:
 
 ```
 curl -XPOST "http://localhost:9200/mx/postal_code" -d "
@@ -38,10 +42,21 @@ curl -XPOST "http://localhost:9200/mx/postal_code" -d "
 }"
 ```
 
+view documents in elasticsearch:
 
+```
 http://localhost:9200/mx/postal_code/_search?pretty
+```
 
+delete document in elasticsearch
 
+```
+curl -XDELETE http://localhost:9200/mx/postal_code/3
+```
+
+create document in API
+
+```
 curl -H "Content-Type: application/json" -X POST -d '
 {
     "id"         : "3",
@@ -54,21 +69,24 @@ curl -H "Content-Type: application/json" -X POST -d '
         "lon": -102.2837
     }
 }' http://localhost:9000/api/create
+```
 
+delete document in API
 
-curl -XDELETE http://localhost:9200/mx/postal_code/3.0
-
+```
 curl -XDELETE http://localhost:9000/api/delete/3
-
+```
 
 READ
 POST
+```
 http://localhost:9000/api/read
 {"term":"xxx"}
-
+```
 
 CREATE
 POST
+```
 http://localhost:9000/api/create
 {
     "id"         : 5602e292a552099c6067a5f3,
@@ -81,10 +99,12 @@ http://localhost:9000/api/create
         "lon": -102.2837
     }
 }
+```
 
 
 UPDATE
 POST
+```
 http://localhost:9000/api/update
 {
     "id"         : 3,
@@ -97,8 +117,10 @@ http://localhost:9000/api/update
         "lon": -102
     }
 }
-
+```
 
 DELETE
 DELETE
+```
 http://localhost:9000/api/delete/3.0
+```
