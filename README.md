@@ -77,15 +77,17 @@ delete document in API
 curl -XDELETE http://localhost:9000/api/delete/3
 ```
 
+
+
 READ
-POST
+(POST for HttpRequester)
 ```
 http://localhost:9000/api/read
 {"term":"xxx"}
 ```
 
 CREATE
-POST
+(POST for HttpRequester)
 ```
 http://localhost:9000/api/create
 {
@@ -103,7 +105,7 @@ http://localhost:9000/api/create
 
 
 UPDATE
-POST
+(POST for HttpRequester)
 ```
 http://localhost:9000/api/update
 {
@@ -120,7 +122,7 @@ http://localhost:9000/api/update
 ```
 
 DELETE
-DELETE
+(DELETE for HttpRequester)
 ```
-http://localhost:9000/api/delete/3.0
+http://localhost:9000/api/delete/3
 ```
