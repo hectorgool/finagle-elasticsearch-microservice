@@ -9,7 +9,7 @@ Scala Play 2.4.2 + Finagle +  Elasticsearch
 
 2) startserver.sh
 
-
+```
 curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
 {
     \"cp\"         : \"20008\",
@@ -21,8 +21,9 @@ curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
         \"lon\": \"-102.2837\"
     }
 }"
+```
 
-
+```
 curl -XPOST "http://localhost:9200/mx/postal_code" -d "
 {
 	\"id\"         : \"20008\",
@@ -35,6 +36,7 @@ curl -XPOST "http://localhost:9200/mx/postal_code" -d "
         \"lon\": \"-102.2837\"
     }
 }"
+```
 
 
 http://localhost:9200/mx/postal_code/_search?pretty
