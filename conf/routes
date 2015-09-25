@@ -15,4 +15,4 @@ POST        /api/read               controllers.Application.readDocument
 
 POST        /api/update             controllers.Application.updateDocument
 
-DELETE      /api/delete/:id         controllers.Application.deleteDocument(id: Long)
+DELETE      /api/delete/:id         controllers.Application.deleteDocument(id: String)
