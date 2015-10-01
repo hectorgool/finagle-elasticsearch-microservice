@@ -1,6 +1,4 @@
 import AssemblyKeys._
-//import NativePackagerKeys._
-//import com.typesafe.sbt.SbtNativePackager._
 
 assemblySettings
 
@@ -11,7 +9,7 @@ fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value)
 
 name := """finagle-elasticsearch-microservice"""
 
-version := "1.0-SNAPSHOT"
+version := "SANTO"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
@@ -25,8 +23,8 @@ libraryDependencies ++= Seq(
   cache,
   ws exclude ("org.apache.httpcomponents" , "httpclient"),
   specs2 % Test,
-  "com.twitter"                 % "finagle-http_2.11"       % "6.25.0",
-  "com.twitter"                 % "bijection-util_2.11"     % "0.7.2"
+  "com.twitter" % "finagle-http_2.11"   % "6.28.0",
+  "com.twitter" % "bijection-util_2.11" % "0.8.1"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"

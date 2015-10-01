@@ -2,7 +2,7 @@ package lib
 
 
 import com.twitter.conversions.time._
-import com.twitter.finagle.{Http, Service, ServiceFactory}
+import com.twitter.finagle.{Http, Service, ChannelWriteException}
 import com.twitter.util.Future
 import org.jboss.netty.buffer.ChannelBuffers
 import org.jboss.netty.handler.codec.http.HttpHeaders.Names._
@@ -106,8 +106,9 @@ object FinagleClient{
     httpResponse.onSuccess{
       response =>
         Logger.debug("Received response: " + response)
-    }.onFailure{ err: Throwable =>
-        Logger.error(err.toString)
+    }.onFailure{ 
+        err: Throwable =>
+          Logger.error(err.toString)
     }
 
   }
