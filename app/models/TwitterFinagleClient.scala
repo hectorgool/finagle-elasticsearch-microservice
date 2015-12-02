@@ -1,4 +1,4 @@
-package lib
+package models
 
 
 import com.twitter.conversions.time._
@@ -14,7 +14,7 @@ import play.api.Logger
 import play.api.Play.current
 
 
-object FinagleClient{
+object TwitterFinagleClient{
 
 
   val hosts = current.configuration.getString("elasticsearch.hosts").get//conf/application.conf:elasticsearch.hosts="localhost:9200"

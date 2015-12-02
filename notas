@@ -90,3 +90,29 @@ docker rmi $(docker images -q)
 
 
 docker run --name FINAGLE -p 8080:9000 finagle-elasticsearch-microservice:SANTO
+
+
+
+
+curl -H "Content-Type: application/json" -X POST -d '
+{"term":"xxx"}
+}' http://localhost:9000/api/read
+
+
+delete document in API
+
+```
+curl -XDELETE http://localhost:9000/api/delete/3
+```
+
+
+
+READ
+(POST for HttpRequester)
+```
+http://localhost:9000/api/read
+{"term":"xxx"}
+
+
+
+curl -XDELETE http://localhost:9000/api/delete/5602e292a552099c6067a5f3

@@ -91,8 +91,8 @@ CREATE
 ```
 http://localhost:9000/api/create
 {
-    "id"         : 5602e292a552099c6067a5f3,
-    "cp"         : 208,
+    "id"         : "5602e292a552099c6067a5f3",
+    "cp"         : "208",
     "colonia"    : "xxx",
     "ciudad"     : "yyy",
     "delegacion" : "zzz",

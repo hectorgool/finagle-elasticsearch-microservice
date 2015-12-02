@@ -6,13 +6,14 @@
 GET     /                           controllers.Application.index
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file           controllers.Assets.versioned(path="/public", file: Asset)
 
+POST        /api/create             controllers.PostalCode.createDocument
 
-POST        /api/create             controllers.Application.createDocument
+POST        /api/read               controllers.PostalCode.readDocument
 
-POST        /api/read               controllers.Application.readDocument
+GET         /api/get/:term          controllers.PostalCode.getDocument(term: String)
 
-POST        /api/update             controllers.Application.updateDocument
+POST        /api/update             controllers.PostalCode.updateDocument
 
-DELETE      /api/delete/:id         controllers.Application.deleteDocument(id: String)
+DELETE      /api/delete/:id         controllers.PostalCode.deleteDocument(id: String)

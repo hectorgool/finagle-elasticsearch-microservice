@@ -23,7 +23,7 @@ libraryDependencies ++= Seq(
   cache,
   ws exclude ("org.apache.httpcomponents" , "httpclient"),
   specs2 % Test,
-  "com.twitter" % "finagle-http_2.11"   % "6.28.0",
+  "com.twitter" % "finagle-http_2.11"   % "6.27.0",
   "com.twitter" % "bijection-util_2.11" % "0.8.1"
 )
 
