@@ -27,8 +27,6 @@ class PostalCode extends Controller with UtilBijections {
  		
 		val reqData: JsValue = request.body
 
-		println("reqData: " + reqData)
-
 		val id = (reqData \ "id").as[String]
 		val cp = (reqData \ "cp").asOpt[Double]
 		val colonia = (reqData \ "colonia").asOpt[String]

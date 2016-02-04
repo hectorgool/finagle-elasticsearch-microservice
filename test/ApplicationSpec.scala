@@ -4,6 +4,7 @@ import org.junit.runner._
 
 import play.api.test._
 import play.api.test.Helpers._
+import play.api.libs.json._
 
 /**
  * Add your spec here.
@@ -23,9 +24,25 @@ class ApplicationSpec extends Specification {
       val home = route(FakeRequest(GET, "/")).get
 
       status(home) must equalTo(OK)
-      contentType(home) must beSome.which(_ == "text/html")
-      contentAsString(home) must contain ("Your API is ready.")
+      contentType(home) must beSome.which(_ == "application/json")
+      contentAsJson(home) mustEqual ( Json.obj("data" -> "Your API is ready.") )
+
     }
+
+    /*
+    val action: EssentialAction = Action { request =>
+      val value = (request.body.asJson.get \ "field").as[String]
+      Ok(value)
+    }
+
+    val request = FakeRequest(POST, "/").withJsonBody(Json.parse("""{ "field": "value" }"""))
+
+    val result = call(action, request)
+
+    status(result) mustEqual OK
+    contentAsString(result) mustEqual "value"
+    */
+
     /*
     "render the read page" in new WithApplication{
       val home = route(FakeRequest(GET, "/api/read")).get

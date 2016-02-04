@@ -116,3 +116,7 @@ http://localhost:9000/api/read
 
 
 curl -XDELETE http://localhost:9000/api/delete/5602e292a552099c6067a5f3
+
+
+API test example
+https://github.com/guardian/prism/blob/master/test/ApiSpec.scala

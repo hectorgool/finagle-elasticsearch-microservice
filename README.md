@@ -1,4 +1,4 @@
-Elasticsearch Microservice
+# Elasticsearch Microservice
 =================================
 
 Scala Play 2.4.2 + Finagle +  Elasticsearch 
