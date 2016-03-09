@@ -1,17 +1,33 @@
 # Elasticsearch Microservice
-=================================
 
-Scala Play 2.4.2 + Finagle +  Elasticsearch 
+An API REST using Scala Play + Finagle + Elasticsearch 
 
+## Current Version
 
-1) ./activator assembly
+For Play 2.4.2:
 
-
-2) startserver.sh
-
-save document 1 in elasticsearch:
-
+```scala
+  "com.twitter" % "finagle-http_2.11"   % "6.27.0",
+  "com.twitter" % "bijection-util_2.11" % "0.8.1"
 ```
+
+### Installation
+
+You need type:
+```sh
+./elasticsearch_index_mappings.sh
+./load_documents.sh
+
+$ activator
+[fara] $ clean
+[fara] $ reload
+[fara] $ update
+[fara] $ compile
+[fara] $ run
+```
+## CRUD in Elasticsearch
+Save 2 documents:
+```sh
 curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
 {
     \"cp\"         : \"20008\",
@@ -23,14 +39,9 @@ curl -X PUT "http://localhost:9200/mx/postal_code/2" -d "
         \"lon\": \"-102.2837\"
     }
 }"
-```
-
-save document 2 in elasticsearch:
-
-```
 curl -XPOST "http://localhost:9200/mx/postal_code" -d "
 {
-	\"id\"         : \"20008\",
+    \"id\"         : \"20008\",
     \"cp\"         : \"20008\",
     \"colonia\"    : \"Delegación de La Secretaría de Comercio y Fomento Industrial\",
     \"ciudad\"     : \"Aguascalientes\",
@@ -41,54 +52,28 @@ curl -XPOST "http://localhost:9200/mx/postal_code" -d "
     }
 }"
 ```
-
-view documents in elasticsearch:
-
-```
+View documents:
+```sh
 http://localhost:9200/mx/postal_code/_search?pretty
 ```
-
-delete document in elasticsearch
-
-```
+Delete document:
+```sh
 curl -XDELETE http://localhost:9200/mx/postal_code/3
 ```
 
-create document in API
+## CRUD in API REST
 
-```
-curl -H "Content-Type: application/json" -X POST -d '
-{
-    "id"         : "3",
-    "cp"         : 208,
-    "colonia"    : "xxx",
-    "ciudad"     : "yyy",
-    "delegacion" : "zzz",
-    "location": {
-        "lat": 22.0074,
-        "lon": -102.2837
-    }
-}' http://localhost:9000/api/create
-```
+For example i use HttpRequester ([Mozilla Firefox extension](https://addons.mozilla.org/es/firefox/addon/httprequester/)).
+HttpRequester is a tool for easily making HTTP requests (GET/PUT/POST/DELETE), viewing the responses, and keeping a history of transactions.
 
-delete document in API
-
-```
-curl -XDELETE http://localhost:9000/api/delete/3
-```
-
-
-
-READ
-(POST for HttpRequester)
-```
+READ (POST for HttpRequester):
+```sh
 http://localhost:9000/api/read
 {"term":"xxx"}
 ```
 
-CREATE
-(POST for HttpRequester)
-```
+CREATE (POST for HttpRequester):
+```sh
 http://localhost:9000/api/create
 {
     "id"         : "5602e292a552099c6067a5f3",
@@ -102,11 +87,8 @@ http://localhost:9000/api/create
     }
 }
 ```
-
-
-UPDATE
-(POST for HttpRequester)
-```
+UPDATE (POST for HttpRequester):
+```sh
 http://localhost:9000/api/update
 {
     "id"         : 3,
@@ -121,8 +103,10 @@ http://localhost:9000/api/update
 }
 ```
 
-DELETE
-(DELETE for HttpRequester)
-```
+DELETE (DELETE for HttpRequester)
+```sh
 http://localhost:9000/api/delete/3
 ```
+
+
+
